@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cf.owm.myim.mapper.FriendMapper">
+  <resultMap id="BaseResultMap" type="cf.owm.myim.entity.Friend">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="friend_id" jdbcType="VARCHAR" property="friendId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="friend_name" jdbcType="VARCHAR" property="friendName" />
+    <result column="friend_type" jdbcType="VARCHAR" property="friendType" />
+    <result column="friend_group_id" jdbcType="VARCHAR" property="friendGroupId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="friend_status" jdbcType="INTEGER" property="friendStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, friend_id, user_id, friend_name, friend_type, friend_group_id, create_time, friend_status
+  </sql>
+  <select id="selectByExample" parameterType="cf.owm.myim.entity.FriendExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from friend
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from friend
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from friend
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cf.owm.myim.entity.FriendExample">
+    delete from friend
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cf.owm.myim.entity.Friend">
+    insert into friend (id, friend_id, user_id, 
+      friend_name, friend_type, friend_group_id, 
+      create_time, friend_status)
+    values (#{id,jdbcType=VARCHAR}, #{friendId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{friendName,jdbcType=VARCHAR}, #{friendType,jdbcType=VARCHAR}, #{friendGroupId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{friendStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cf.owm.myim.entity.Friend">
+    insert into friend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="friendId != null">
+        friend_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="friendName != null">
+        friend_name,
+      </if>
+      <if test="friendType != null">
+        friend_type,
+      </if>
+      <if test="friendGroupId != null">
+        friend_group_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="friendStatus != null">
+        friend_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="friendId != null">
+        #{friendId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="friendName != null">
+        #{friendName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendType != null">
+        #{friendType,jdbcType=VARCHAR},
+      </if>
+      <if test="friendGroupId != null">
+        #{friendGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="friendStatus != null">
+        #{friendStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cf.owm.myim.entity.FriendExample" resultType="java.lang.Long">
+    select count(*) from friend
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update friend
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendId != null">
+        friend_id = #{record.friendId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendName != null">
+        friend_name = #{record.friendName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendType != null">
+        friend_type = #{record.friendType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendGroupId != null">
+        friend_group_id = #{record.friendGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.friendStatus != null">
+        friend_status = #{record.friendStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update friend
+    set id = #{record.id,jdbcType=VARCHAR},
+      friend_id = #{record.friendId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      friend_name = #{record.friendName,jdbcType=VARCHAR},
+      friend_type = #{record.friendType,jdbcType=VARCHAR},
+      friend_group_id = #{record.friendGroupId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      friend_status = #{record.friendStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cf.owm.myim.entity.Friend">
+    update friend
+    <set>
+      <if test="friendId != null">
+        friend_id = #{friendId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="friendName != null">
+        friend_name = #{friendName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendType != null">
+        friend_type = #{friendType,jdbcType=VARCHAR},
+      </if>
+      <if test="friendGroupId != null">
+        friend_group_id = #{friendGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="friendStatus != null">
+        friend_status = #{friendStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cf.owm.myim.entity.Friend">
+    update friend
+    set friend_id = #{friendId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      friend_name = #{friendName,jdbcType=VARCHAR},
+      friend_type = #{friendType,jdbcType=VARCHAR},
+      friend_group_id = #{friendGroupId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      friend_status = #{friendStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

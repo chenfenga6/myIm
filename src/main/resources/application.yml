@@ -1,0 +1,27 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /myim
+spring:
+  profiles:
+    include:
+      datasource
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: static/**
+
+#ÌÚÑ¶
+tengxun:
+  # IMÍ¨Ñ¶
+  im:
+    baseurl: https://console.tim.qq.com/
+    sdkappid: 1400402017
+    key: 932336442f72b22891088bc459a521ddcd3b3da6f16f6339b0a9104c14f46295
+    identifier: xuly
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cf.owm.myim.entity
